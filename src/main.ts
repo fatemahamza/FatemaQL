@@ -25,10 +25,11 @@
 import { createLoginContent, startAnimation } from './showLogin';
 import van from "vanjs-core";
 
-// Example: Call this function when you want to show the login content
 const showLogin = () => {
   // Create login content and append it to the body
   const loginContent = createLoginContent();
+
+  // clear here
   van.add(document.body, loginContent);
 
   // Start the animation once the content is rendered
