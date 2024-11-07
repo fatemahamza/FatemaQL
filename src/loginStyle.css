@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+    font-family: 'Electrolize', sans-serif;
+    color: white;
+    background: rgb(0, 0, 51);
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+  
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px;
+    padding-top: 100px 20vw;
+}
+
+.electrolize-regular {
+    font-family: "Electrolize", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.login {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.blobs {
+    width: 100%;
+    background: url(blobs.svg) no-repeat bottom / cover;
+}
+
+.blob-motion {
+    /* position: absolute;
+    transform: translateY(-20%); */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+  
+.blob-content {
+    /* z-index: 1; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.167);
+    color: rgb(0, 0, 51);
+    width: 300px;
+    padding: 20px;
+    border-radius: 14em;
+}
+  
+.blob-content input {
+    border: 0;
+    background: rgb(255, 255, 255);
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 3px solid rgb(255, 255, 255);
+    padding: 14px 10px;
+    width: 150px;
+    outline: none;
+    color: rgb(0, 0, 51);
+    font-family: 'Electrolize';
+    font-weight: bold;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.blob-content button {
+    color: rgb(0, 0, 51);
+    font-family: 'Electrolize';
+    font-weight: bold;
+    border-radius: 24px;
+    background: none;
+    border: 3px solid rgb(255, 255, 255);
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 10px;
+    width: 150px;
+}
+
+.blob-content button:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.604);
+    border: rgba(255, 255, 255, 0.604);
+}
+
+.blob-content button:active {
+    background-color: rgb(255, 255, 255);
+}
