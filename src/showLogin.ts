@@ -9,6 +9,49 @@ const createSVGElement = (tag: string, attrs: Record<string, any> = {}) => {
   return elem;
 };
 
+
+async function  handleLogin(e: SubmitEvent) {
+  const credential = document.getElementById("credential") as HTMLInputElement;
+  const password = document.getElementById("password") as HTMLInputElement;
+
+  console.log(credential.value);
+  
+  if (!credential || !password) return;
+
+  const base64Encode = (username: string, password: string) => {
+    return btoa(`${username}:${password}`);
+  }
+
+  const encodedCredentials = base64Encode(credential.value, password.value);
+
+  try {
+    const response = await fetch("https://learn.reboot01.com/api/auth/signin", {
+      method: "POST",
+      headers: {
+        "Authorization": `Basic ${encodedCredentials}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    if (response.ok) {
+      const data = await response.text(); // trimm it, setItem save to local storage
+      localStorage.getItem("jwt", )
+      // localStorage.setItem("jwt", data);
+      console.log(data)
+      console.log("you are logged in!!");
+      // window.location.href = "/home";
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message || "Invalid credentials"}`);
+    }
+  } catch (error) {
+    console.error("Error: ", error);
+    alert("An error occurred while trying to log in.");
+  }
+}
+
+
 // Function to create and return the login form with SVG
 export const createLoginContent = () => {
   // Create SVG structure manually
@@ -68,9 +111,9 @@ export const createLoginContent = () => {
     div(
       { class: "blob-content" },
       h1("Login"),
-      input({ type: "text", name: "username", placeholder: "Username" }),
-      input({ type: "password", name: "password", placeholder: "Password" }),
-      button({ type: "submit" }, "Login")
+      input({ type: "text", name: "username", placeholder: "Username", id: "credential" }),
+      input({ type: "password", name: "password", placeholder: "Password", id: "password" }),
+      button({ type: "submit", onclick: handleLogin }, "Login")
     ),
     blobMotionSVG // Append the created SVG
   );
