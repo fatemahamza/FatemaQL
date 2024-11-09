@@ -1,0 +1,46 @@
+level and xp amounts, id: lnm9zjcu46n
+
+query rootEventDetails($userId: Int!, $rootEventId: Int!) {
+    xp: transaction_aggregate(
+      where: {
+        userId: { _eq: $userId }
+        type: { _eq: "xp" }
+        eventId: { _eq: $rootEventId }
+      }
+    ) { aggregate { sum { amount } } }
+    level: transaction(
+      limit: 1
+      order_by: { amount: desc }
+      where: {
+        userId: { _eq: $userId }
+        type: { _eq: "level" }
+        eventId: { _eq: $rootEventId }
+      }
+    ) { amount }
+  }
+
+  variables: 
+  {
+  "userId": 425,
+  "rootEventId": 20
+}
+
+data:
+{
+  "data": {
+    "xp": {
+      "aggregate": {
+        "sum": {
+          "amount": 647325
+        }
+      }
+    },
+    "level": [
+      {
+        "amount": 25
+      }
+    ]
+  }
+}
+
+

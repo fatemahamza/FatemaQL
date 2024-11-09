@@ -1,16 +1,33 @@
 import { createLoginContent, startAnimation } from './showLogin';
+import { ShowHomePage } from './showHomePage';
 import van from "vanjs-core";
 
-const showLogin = () => {
-  // Create login content and append it to the body
+const clearBody = () => {
+  document.body.innerHTML = "";
+};
+
+const showLoginPage = () => {
+  clearBody();
   const loginContent = createLoginContent();
-
-  // clear here
   van.add(document.body, loginContent);
-
-  // Start the animation once the content is rendered
   document.addEventListener("DOMContentLoaded", startAnimation);
 };
 
-// Call the function to display login content when needed
-showLogin();
+const showHome = () => {
+  clearBody();
+  const homeContent = ShowHomePage();
+  van.add(document.body, homeContent);
+};
+
+const isAuthenticated = () => {
+  const token = localStorage.getItem("jwt");
+  return !!token;
+}
+
+if (isAuthenticated()) {
+  showHome();
+} else {
+  showLoginPage();
+}
+
+export {showLoginPage, showHome};
