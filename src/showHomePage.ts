@@ -1,6 +1,7 @@
 import van from "vanjs-core";
 import { showLoginPage } from "./main";
-import { fetchUserData } from "./getUserData";
+import { graphqlRequest } from "./graphqlServices";
+import { QUERY } from "./queries";
 
 const { section, h1, div, button, p} = van.tags;
 
@@ -33,7 +34,7 @@ export const ShowHomePage = () => {
         ),
     );
 
-    fetchUserData();
+    graphqlRequest<{ user: { id: string } }>(QUERY);
 
     return homeContent;
 };
