@@ -99,7 +99,6 @@ section {
 .blob-content button:hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.604);
-    border: rgba(255, 255, 255, 0.604);
 }
 
 .blob-content button:active {

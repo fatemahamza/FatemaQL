@@ -1,5 +1,3 @@
-import { QUERY } from "./queries";
-
 const GRAPHQL_ENDPOINT = 'https://learn.reboot01.com/api/graphql-engine/v1/graphql';
 
 interface GraphQlResponse<T> {
@@ -23,5 +21,6 @@ export const graphqlRequest = async <T>(query: string): Promise<GraphQlResponse<
     if (result.errors) {
       console.error("GraphQL errors:", result.errors);
     }
+    console.log(result);
     return result;
   };

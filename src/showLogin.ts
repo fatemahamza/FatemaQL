@@ -1,5 +1,5 @@
 import van from "vanjs-core";
-import { showHome } from "./main";
+//import { showHome } from "./main";
 import { handleLogin } from "./authintication";
 
 const { section, div, h1, input, button } = van.tags;

@@ -20,14 +20,68 @@ section {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 300px;
+  gap: 200px;
   padding: 100px;
+}
+
+.logout-button {
+  position: absolute;
+  top: 25px;
+  right: 10px;
+  color: rgb(255, 255, 255);
+  font-family: 'Electrolize';
+  font-weight: bold;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.481);
+  border: 3px solid rgb(255, 255, 255);
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+  color: rgb(0, 0, 51);
+}
+
+.logout-button:active {
+  background-color: rgb(255, 255, 255);
+}
+
+.info-box {
+  height: 50px;
+  width: 200px;
+  background-color: none;
+  text-align: center;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 24px;
+}
+
+#line-chart, #radar-chart {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 .electrolize-regular {
   font-family: "Electrolize", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+#wave1 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+#wave3 {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: -1;
 }
 
 .aqua {
@@ -44,6 +98,10 @@ section {
 
 .purple {
   background: rgb(45, 22, 92);
+}
+
+.purpley {
+  background: rgb(224, 224, 224);
 }
 
 .orange {
