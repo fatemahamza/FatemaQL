@@ -2,7 +2,7 @@ import van from "vanjs-core";
 import ApexCharts from "apexcharts";
 import { showLoginPage } from "./main";
 import { graphqlRequest } from "./graphqlServices";
-import { ID_QUERY, USER_QUERY, LEVEL_QUERY, TOTAL_XP_AMOUNT, XP_VIEW_QUERY} from "./queries";
+import { ID_QUERY, USER_QUERY, LEVEL_QUERY, TOTAL_XP_AMOUNT, XP_VIEW_QUERY, RADAR_QUERY} from "./queries";
 
 const { section, h1, div, button, p, br} = van.tags;
 
@@ -104,9 +104,33 @@ interface XpResponse {
     };
 }
 
+interface XpViewResponse {
+    xp_view: { 
+        amount: number; 
+        pathByPath: { 
+            results: { createdAt: string }[]; 
+        } ;
+    }[];
+}
+
+interface SkillResponse {
+    user: any;
+    data: {
+      user: {
+        transactions: Transaction[];
+      }[];
+    };
+  }
+
+interface Transaction {
+    type: string;
+    amount: number;
+  }
+
 export const ShowHomePage = async () => {
     const idResponse = await graphqlRequest<{user: {id: number}[]}>(ID_QUERY);
     const userId = idResponse.data.user[0]?.id;
+    console.log("User ID:", userId);
 
     if (!userId) {
         console.error("user ID not found");
@@ -115,18 +139,11 @@ export const ShowHomePage = async () => {
 
     const levelResponse = await graphqlRequest<LevelResponse>(LEVEL_QUERY, { userId });
     const level = levelResponse.data.event_user[0]?.level || "N/A";
+    console.log("Level:", level);
 
     const xpResponse = await graphqlRequest<XpResponse>(TOTAL_XP_AMOUNT, { userId });
     const totalXP = xpResponse.data.xp.aggregate.sum.amount || 0;
-
-    // const xp_response = await graphqlRequest<XpResponse>(XP_VIEW_QUERY);
-    // const xp_view = xp_response.data || 0;
-
-    console.log("User ID:", userId);
-    console.log("Level:", level);
     console.log("Total XP Amount:", totalXP);
-
-    
 
     const userData = await graphqlRequest<{ user: { firstName: string; lastName: string }[] }>(USER_QUERY);
     const firstName = userData.data.user[0]?.firstName || "Unknown";
@@ -134,8 +151,81 @@ export const ShowHomePage = async () => {
 
     console.log(firstName, lastName);
 
-    // graphqlRequest(LEVEL_QUERY);
-    // const level = await graphqlRequest<{ user: { firstName: string; lastName: string }[] }>(LEVEL_QUERY);
+    const xp_viewResponse = await graphqlRequest<XpViewResponse>(XP_VIEW_QUERY);
+    const xp_view = xp_viewResponse.data.xp_view;
+    console.log("xp_view: ", xp_view);
+
+    // extract data for line chart
+    const currentDate = new Date();
+    const sixMonthsAgo = new Date(currentDate.setMonth(currentDate.getMonth() - 6));
+
+    const filteredXpViews = xp_view.filter(entry => {
+        const createdAt = entry.pathByPath?.results?.[0]?.createdAt;
+        if (createdAt) {
+            const entryDate = new Date(createdAt);
+            return entryDate >= sixMonthsAgo; // Include if entry is within the last 6 months
+        }
+        return false;
+    });
+
+    const monthlyXpMap: { [key: string]: number } = {};
+
+    filteredXpViews.forEach(entry => {
+        const createdAt = entry.pathByPath?.results?.[0]?.createdAt;
+        if (createdAt) {
+            const entryDate = new Date(createdAt);
+            const monthYear = `${entryDate.getMonth()+1}/${entryDate.getFullYear()}`;
+
+            if (monthlyXpMap[monthYear]) {
+                monthlyXpMap[monthYear] += entry.amount;
+            } else {
+                monthlyXpMap[monthYear] = entry.amount;
+            }
+    
+        }
+    });
+
+    // // Prepare data for the chart
+    // const months = Object.keys(monthlyXpMap);
+    // const xpAmounts = months.map(month => monthlyXpMap[month]);
+
+    // Ensure the chart displays the last 6 months, even if some months have no entries
+    const lastSixMonths = Array.from({ length: 6 }, (_, i) => {
+        const monthDate = new Date();
+        monthDate.setMonth(monthDate.getMonth() - (5 - i));
+        return `${monthDate.getMonth() + 1}/${monthDate.getFullYear()}`;
+    });
+
+    // Fill missing months with 0 XP
+    const monthsFilled = lastSixMonths.map(month => {
+        return monthlyXpMap[month] || 0; // Use 0 if no XP data for the month
+    });
+
+    const skillsResponse = await graphqlRequest<SkillResponse>(RADAR_QUERY);
+    const transactions = skillsResponse.data.user[0]?.transactions || [];
+     console.log("transactions: ", transactions);
+
+
+    const skillTypes = [
+        "skill_js", "skill_go", "skill_html", "skill_prog", 
+        "skill_front-end", "skill_back-end"
+    ];
+
+    // Filter the transactions to only include the relevant skill types
+    const filteredSkills = transactions.filter((transaction: Transaction) =>
+        skillTypes.includes(transaction.type)
+    );
+    
+    // Map the filtered skills to their respective amounts
+    const skillData = skillTypes.map(skillType => {
+        const transaction = filteredSkills.find((t: Transaction) => t.type === skillType);
+        return transaction ? transaction.amount : 0; // Default to 0 if no data for this skill
+    });
+    
+    console.log("Skill Data: ", skillData);
+    
+    // Skill categories corresponding to the skills you want to display in the radar chart
+    const skillCategories = ['JavaScript', 'Go', 'HTML', 'Programming', 'Front-End', 'Back-End'];
 
     const homeContent = 
     section(
@@ -176,9 +266,9 @@ export const ShowHomePage = async () => {
 
     // Initialize the line chart
     const lineChartOptions = {
-         series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        series: [{
+            name: "XP Amount",
+            data: monthsFilled
         }],
         chart: {
             height: 350,
@@ -194,17 +284,17 @@ export const ShowHomePage = async () => {
             curve: 'straight'
         },
         title: {
-            // text: 'Product Trends by Month',
+            text: 'XP Amount Over the Last 6 Months',
             align: 'left'
         },
         grid: {
             row: {
                 colors: ['#311B5E82'],
                 opacity: 0.5
-            },
+            }
         },
         xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            categories: lastSixMonths, // Display months on the X-axis
         }
     };
 
@@ -214,8 +304,8 @@ export const ShowHomePage = async () => {
     // Initialize the radar chart
     const radarChartOptions = {
         series: [{
-            name: "Series 1",
-            data: [80, 50, 30, 40, 100, 20]
+            name: "Skills Levels",
+            data: skillData,
         }],
         chart: {
             height: 350,
@@ -225,7 +315,7 @@ export const ShowHomePage = async () => {
             text: 'Radar Chart - Skill Levels'
         },
         xaxis: {
-            categories: ['Coding', 'Testing', 'Design', 'Debugging', 'Documentation', 'Collaboration']
+            categories: skillCategories,
         }
     };
 
