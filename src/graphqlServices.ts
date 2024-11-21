@@ -5,7 +5,7 @@ interface GraphQlResponse<T> {
     errors?: {message: string} [];
 }
 
-export const graphqlRequest = async <T>(query: string): Promise<GraphQlResponse<T>> => {
+export const graphqlRequest = async <T>(query: string, variables?: Record<string, any>): Promise<GraphQlResponse<T>> => {
     const token = localStorage.getItem('jwt'); // Update token management as needed
   
     const response = await fetch(GRAPHQL_ENDPOINT, {
@@ -14,7 +14,7 @@ export const graphqlRequest = async <T>(query: string): Promise<GraphQlResponse<
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, variables}),
     });
   
     const result = await response.json();
@@ -22,5 +22,5 @@ export const graphqlRequest = async <T>(query: string): Promise<GraphQlResponse<
       console.error("GraphQL errors:", result.errors);
     }
     console.log(result);
-    return result;
+    return result as GraphQlResponse<T>;
   };

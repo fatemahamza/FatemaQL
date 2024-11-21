@@ -1,11 +1,12 @@
-export const ID_QUERY =`
+//used
+export const ID_QUERY =` 
 query {
     user {
         id
     }
 }`;
 
-// normal query
+// normal query - used
 export const USER_QUERY = `
 {
             user {
@@ -18,16 +19,27 @@ export const USER_QUERY = `
         }
 `
 
+// used
 export const LEVEL_QUERY = `
-{
-  "data": {
-    "event_user": [
-      {
-        "level": 25
-      }
-    ]
-  }
+query GetTitleData($userId: Int!) {
+    event_user(where: { userId: { _eq: $userId }, eventId: { _eq: 20 } }) {
+        level
+    }
 }
+
+`;
+// {"userID": 425}
+
+// used
+export const TOTAL_XP_AMOUNT = `
+query rootEventDetails($userId: Int!) {
+    xp: transaction_aggregate(
+      where: {
+        userId: { _eq: $userId }
+        type: { _eq: "xp" }
+      }
+    ) { aggregate { sum { amount } } }
+  }
 `;
 // {"userID": 425}
 
@@ -67,4 +79,19 @@ export const XP_VIEW_QUERY = `
         }
 `;
 
+
+export const RADAR_QUERY = `query {
+    user(where: {}) {
+      transactions(
+        order_by: [{type: desc}, {amount: desc}]
+        distinct_on: [type]
+        where: {
+          type: {_in: ["skill_js", "skill_go", "skill_html", "skill_prog", "skill_front-end", "skill_back-end"]}
+        }
+      ) {
+        type
+        amount
+      }
+    }
+  }`;
 

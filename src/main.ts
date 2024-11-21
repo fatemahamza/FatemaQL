@@ -13,10 +13,10 @@ const showLoginPage = () => {
   document.addEventListener("DOMContentLoaded", startAnimation);
 };
 
-const showHome = () => {
+const showHome = async () => {
   clearBody();
   const homeContent = ShowHomePage();
-  van.add(document.body, homeContent);
+  van.add(document.body, await homeContent);
 };
 
 const isAuthenticated = () => {

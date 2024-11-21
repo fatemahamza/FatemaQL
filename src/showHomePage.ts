@@ -2,7 +2,7 @@ import van from "vanjs-core";
 import ApexCharts from "apexcharts";
 import { showLoginPage } from "./main";
 import { graphqlRequest } from "./graphqlServices";
-import { ID_QUERY, USER_QUERY, LEVEL_QUERY } from "./queries";
+import { ID_QUERY, USER_QUERY, LEVEL_QUERY, TOTAL_XP_AMOUNT, XP_VIEW_QUERY} from "./queries";
 
 const { section, h1, div, button, p, br} = van.tags;
 
@@ -90,18 +90,64 @@ const createDecorativeSVGs = () => {
     document.body.appendChild(leftLine);
 };
 
-export const ShowHomePage = () => {
+interface LevelResponse {
+    event_user: { level: number }[];
+}
+
+interface XpResponse {
+    xp: {
+        aggregate: {
+            sum: {
+                amount: number;
+            };
+        };
+    };
+}
+
+export const ShowHomePage = async () => {
+    const idResponse = await graphqlRequest<{user: {id: number}[]}>(ID_QUERY);
+    const userId = idResponse.data.user[0]?.id;
+
+    if (!userId) {
+        console.error("user ID not found");
+        return;
+    }
+
+    const levelResponse = await graphqlRequest<LevelResponse>(LEVEL_QUERY, { userId });
+    const level = levelResponse.data.event_user[0]?.level || "N/A";
+
+    const xpResponse = await graphqlRequest<XpResponse>(TOTAL_XP_AMOUNT, { userId });
+    const totalXP = xpResponse.data.xp.aggregate.sum.amount || 0;
+
+    // const xp_response = await graphqlRequest<XpResponse>(XP_VIEW_QUERY);
+    // const xp_view = xp_response.data || 0;
+
+    console.log("User ID:", userId);
+    console.log("Level:", level);
+    console.log("Total XP Amount:", totalXP);
+
+    
+
+    const userData = await graphqlRequest<{ user: { firstName: string; lastName: string }[] }>(USER_QUERY);
+    const firstName = userData.data.user[0]?.firstName || "Unknown";
+    const lastName = userData.data.user[0]?.lastName || "User";
+
+    console.log(firstName, lastName);
+
+    // graphqlRequest(LEVEL_QUERY);
+    // const level = await graphqlRequest<{ user: { firstName: string; lastName: string }[] }>(LEVEL_QUERY);
+
     const homeContent = 
     section(
-        h1("Welcome 01 student!"),
+        h1(`Welcome ${firstName} ${lastName}!`),
         button(
             {onclick: handleLogout, class: "logout-button"},
             "Logout"
         ),
         div(
             {class: "info"},
-            div({class: "info-box"},  p("Level 25")),
-            div({class: "info-box"}, p("456 KB")),
+            div({class: "info-box"},  p(`Level ${level}`)),
+            div({class: "info-box"}, p(`${totalXP} KB`)),
             div({class: "info-box"}, p("current project"))
         ),
         section(
@@ -126,13 +172,7 @@ export const ShowHomePage = () => {
         ),
     );
 
-    graphqlRequest<{ user: { id: string } }>(ID_QUERY);
-    graphqlRequest<{ user: { id: string } }>(USER_QUERY);
-    graphqlRequest<{ user: { id: string } }>(LEVEL_QUERY);
-
-
     document.body.appendChild(homeContent);
-
 
     // Initialize the line chart
     const lineChartOptions = {
