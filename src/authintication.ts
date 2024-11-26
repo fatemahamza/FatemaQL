@@ -1,6 +1,6 @@
 import { showHome } from "./main";
 
-async function  handleLogin(e: SubmitEvent) {
+async function  handleLogin() {
     const credential = document.getElementById("credential") as HTMLInputElement;
     const password = document.getElementById("password") as HTMLInputElement;
   
