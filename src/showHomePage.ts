@@ -18,13 +18,13 @@ const createDecorativeSVGs = () => {
     // Wave 1 - Left side
     const wave1 = createSVGElement("svg", {
         id: "wave1",
-        viewBox: "0 0 450 900",
+        viewBox: "0 0 450 1700",
         width: "450",
-        height: "900",
+        height: "1700",
         style: "position: absolute; top: 0; left: 0;"
     });
     const wave1Path = createSVGElement("path", {
-        d: "M163 0L157.8 18.8C152.7 37.7 142.3 75.3 126.2 112.8C110 150.3 88 187.7 97.5 225.2C107 262.7 148 300.3 159 337.8C170 375.3 151 412.7 127.7 450.2C104.3 487.7 76.7 525.3 69.3 562.8C62 600.3 75 637.7 95.2 675.2C115.3 712.7 142.7 750.3 145 787.8C147.3 825.3 124.7 862.7 113.3 881.3L102 900L0 900L0 881.3C0 862.7 0 825.3 0 787.8C0 750.3 0 712.7 0 675.2C0 637.7 0 600.3 0 562.8C0 525.3 0 487.7 0 450.2C0 412.7 0 375.3 0 337.8C0 300.3 0 262.7 0 225.2C0 187.7 0 150.3 0 112.8C0 75.3 0 37.7 0 18.8L0 0Z",
+        d: "M85 0L82 21.8C79 43.7 73 87.3 70.3 131C67.7 174.7 68.3 218.3 71.7 261.8C75 305.3 81 348.7 89.8 392.2C98.7 435.7 110.3 479.3 109.5 523C108.7 566.7 95.3 610.3 89 654C82.7 697.7 83.3 741.3 86.5 784.8C89.7 828.3 95.3 871.7 91.2 915.2C87 958.7 73 1002.3 67.5 1046C62 1089.7 65 1133.3 65.3 1177C65.7 1220.7 63.3 1264.3 65.7 1307.8C68 1351.3 75 1394.7 85.5 1438.2C96 1481.7 110 1525.3 115.7 1569C121.3 1612.7 118.7 1656.3 117.3 1678.2L116 1700L0 1700L0 1678.2C0 1656.3 0 1612.7 0 1569C0 1525.3 0 1481.7 0 1438.2C0 1394.7 0 1351.3 0 1307.8C0 1264.3 0 1220.7 0 1177C0 1133.3 0 1089.7 0 1046C0 1002.3 0 958.7 0 915.2C0 871.7 0 828.3 0 784.8C0 741.3 0 697.7 0 654C0 610.3 0 566.7 0 523C0 479.3 0 435.7 0 392.2C0 348.7 0 305.3 0 261.8C0 218.3 0 174.7 0 131C0 87.3 0 43.7 0 21.8L0 0Z",
         fill: "#5bdcd7",
         "stroke-linecap": "round",
         "stroke-linejoin": "miter"
@@ -34,13 +34,13 @@ const createDecorativeSVGs = () => {
     // Wave 3 - Right side
     const wave3 = createSVGElement("svg", {
         id: "wave3",
-        viewBox: "0 0 450 900",
+        viewBox: "0 0 450 1700",
         width: "450",
-        height: "900",
+        height: "1700",
         style: "position: absolute; top: 0; right: 0;"
     });
     const wave3Path = createSVGElement("path", {
-        d: "M408 900L392.8 881.3C377.7 862.7 347.3 825.3 325.2 787.8C303 750.3 289 712.7 291.2 675.2C293.3 637.7 311.7 600.3 324.3 562.8C337 525.3 344 487.7 351.8 450.2C359.7 412.7 368.3 375.3 368.8 337.8C369.3 300.3 361.7 262.7 350.3 225.2C339 187.7 324 150.3 329.5 112.8C335 75.3 361 37.7 374 18.8L387 0L450 0L450 18.8C450 37.7 450 75.3 450 112.8C450 150.3 450 187.7 450 225.2C450 262.7 450 300.3 450 337.8C450 375.3 450 412.7 450 450.2C450 487.7 450 525.3 450 562.8C450 600.3 450 637.7 450 675.2C450 712.7 450 750.3 450 787.8C450 825.3 450 862.7 450 881.3L450 900Z",
+        d: "M356 1700L361.5 1678.2C367 1656.3 378 1612.7 383.8 1569C389.7 1525.3 390.3 1481.7 381.3 1438.2C372.3 1394.7 353.7 1351.3 344.7 1307.8C335.7 1264.3 336.3 1220.7 341.8 1177C347.3 1133.3 357.7 1089.7 358 1046C358.3 1002.3 348.7 958.7 344.3 915.2C340 871.7 341 828.3 346.5 784.8C352 741.3 362 697.7 368.7 654C375.3 610.3 378.7 566.7 372 523C365.3 479.3 348.7 435.7 349 392.2C349.3 348.7 366.7 305.3 373.8 261.8C381 218.3 378 174.7 370.8 131C363.7 87.3 352.3 43.7 346.7 21.8L341 0L450 0L450 21.8C450 43.7 450 87.3 450 131C450 174.7 450 218.3 450 261.8C450 305.3 450 348.7 450 392.2C450 435.7 450 479.3 450 523C450 566.7 450 610.3 450 654C450 697.7 450 741.3 450 784.8C450 828.3 450 871.7 450 915.2C450 958.7 450 1002.3 450 1046C450 1089.7 450 1133.3 450 1177C450 1220.7 450 1264.3 450 1307.8C450 1351.3 450 1394.7 450 1438.2C450 1481.7 450 1525.3 450 1569C450 1612.7 450 1656.3 450 1678.2L450 1700Z",
         fill: "#5bdcd7",
         "stroke-linecap": "round",
         "stroke-linejoin": "miter"
@@ -145,11 +145,12 @@ export const ShowHomePage = async () => {
     const totalXP = xpResponse.data.xp.aggregate.sum.amount || 0;
     console.log("Total XP Amount:", totalXP);
 
-    const userData = await graphqlRequest<{ user: { firstName: string; lastName: string }[] }>(USER_QUERY);
+    const userData = await graphqlRequest<{ user: { firstName: string; lastName: string, auditRatio: number}[] }>(USER_QUERY);
     const firstName = userData.data.user[0]?.firstName || "Unknown";
     const lastName = userData.data.user[0]?.lastName || "User";
+    const auditRatio = userData.data.user[0]?.auditRatio;
 
-    console.log(firstName, lastName);
+    console.log(firstName, lastName, auditRatio);
 
     const xp_viewResponse = await graphqlRequest<XpViewResponse>(XP_VIEW_QUERY);
     const xp_view = xp_viewResponse.data.xp_view;
@@ -184,10 +185,6 @@ export const ShowHomePage = async () => {
     
         }
     });
-
-    // // Prepare data for the chart
-    // const months = Object.keys(monthlyXpMap);
-    // const xpAmounts = months.map(month => monthlyXpMap[month]);
 
     // Ensure the chart displays the last 6 months, even if some months have no entries
     const lastSixMonths = Array.from({ length: 6 }, (_, i) => {
@@ -234,13 +231,16 @@ export const ShowHomePage = async () => {
             {onclick: handleLogout, class: "logout-button"},
             "Logout"
         ),
+        br(),
+        br(),
         div(
             {class: "info"},
-            div({class: "info-box"},  p(`Level ${level}`)),
-            div({class: "info-box"}, p(`${totalXP} KB`)),
-            div({class: "info-box"}, p("current project"))
+            div({class: "info-box"},  p(`Level: ${level}`)),
+            div({class: "info-box"}, p(`totalXP: ${totalXP} KB`)),
+            div({class: "info-box"}, p(`Audit Ratio: ${auditRatio?.toFixed(2) || "N/A"}`))
         ),
         section(
+            br(),
             br(),
             div(
                 {id: "line-graph", style: "width: 800px; height: 800px;"}
@@ -249,16 +249,14 @@ export const ShowHomePage = async () => {
         section(
             br(),
             br(),
+            br(),
+            br(),
+            br(),
+            br(),
+            br(),
             div(
-                {id: "radar-graph", style: "width: 1000px; height: 1000px;"}
+                {id: "radar-graph", style: "width: 800px; height: 800px;"}
             ),
-        ),
-        section(
-            h1("Audit Ratio")
-        ),
-        section(
-            h1("Audits Maybe"),
-            div("bla bla bla bla bla bla bla")
         ),
     );
 
@@ -294,8 +292,17 @@ export const ShowHomePage = async () => {
             }
         },
         xaxis: {
-            categories: lastSixMonths, // Display months on the X-axis
-        }
+            categories: lastSixMonths,
+        },
+        tooltip: {
+            style: {
+                fontSize: '14px',
+                color: '#000',
+            },
+            theme: 'dark',
+            background: '#f9f9f9',
+            borderColor: '#333',
+        },
     };
 
     const lineChart = new ApexCharts(document.querySelector("#line-graph"), lineChartOptions);
@@ -308,15 +315,41 @@ export const ShowHomePage = async () => {
             data: skillData,
         }],
         chart: {
-            height: 350,
+            height: 700,
             type: 'radar',
         },
         title: {
-            text: 'Radar Chart - Skill Levels'
+            text: 'Radar Chart - Skill Levels',
         },
         xaxis: {
             categories: skillCategories,
-        }
+            labels: {
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    colors: '#333'
+                }
+            }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    fontSize: '20px',
+                    fontWeight: 'bold',
+                    colors: '#00bfff',
+                }
+            }
+        },
+        tooltip: {
+            style: {
+                fontSize: '14px',
+                color: '#000',
+            },
+            theme: 'dark',
+            background: '#f9f9f9',
+            borderColor: '#333',
+        },
+    
     };
 
     const radarChart = new ApexCharts(document.querySelector("#radar-graph"), radarChartOptions);

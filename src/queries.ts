@@ -17,7 +17,7 @@ export const USER_QUERY = `
                 auditRatio
             }
         }
-`
+`;
 
 // used
 export const LEVEL_QUERY = `
@@ -64,7 +64,7 @@ export const AUDIT_QUERY = `
 `;
 
 
-// query with an argument
+// query with an argument - used
 export const XP_VIEW_QUERY = `
 { 
             xp_view(order_by: { amount: desc }) {
@@ -79,7 +79,7 @@ export const XP_VIEW_QUERY = `
         }
 `;
 
-
+// used
 export const RADAR_QUERY = `query {
     user(where: {}) {
       transactions(
