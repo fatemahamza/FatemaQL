@@ -1,6 +1,7 @@
 import van from "vanjs-core";
 import ApexCharts from "apexcharts";
-import { showLoginPage } from "./main";
+//import { showLoginPage } from "./main";
+import { handleLogout } from "./authintication";
 import { graphqlRequest } from "./graphqlServices";
 import { ID_QUERY, USER_QUERY, LEVEL_QUERY, TOTAL_XP_AMOUNT, XP_VIEW_QUERY, RADAR_QUERY} from "./queries";
 
@@ -360,9 +361,4 @@ export const ShowHomePage = async () => {
 
     return homeContent;
 };
-
-function handleLogout() {
-    localStorage.removeItem("jwt");
-    showLoginPage();
-}
 

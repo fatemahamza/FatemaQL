@@ -1,4 +1,4 @@
-import { showHome } from "./main";
+import { showHome, showLoginPage } from "./main";
 
 async function  handleLogin() {
     const credential = document.getElementById("credential") as HTMLInputElement;
@@ -42,8 +42,22 @@ async function  handleLogin() {
     }
   }
   
+  async function handleLogout() {
+        // Send request to the logout endpoint
+         await fetch("https://learn.reboot01.com/api/auth/signout", {
+            method: "POST",
+            headers: {
+                'x-jwt-token': localStorage.getItem("jwt") ?? ''
+            },
+        });
+
+        localStorage.removeItem("jwt");
+        console.log("you logged out");
+        showLoginPage(); 
+}
+
   function trimQuotes(input: string): string {
     return input.replace(/^"|"$/g, "");
   }
 
-  export {handleLogin};
+  export {handleLogin, handleLogout};
