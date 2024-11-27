@@ -333,6 +333,7 @@ export const ShowHomePage = async () => {
             }
         },
         yaxis: {
+            max: 100,
             labels: {
                 style: {
                     fontSize: '20px',
